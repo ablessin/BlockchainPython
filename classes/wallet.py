@@ -34,3 +34,14 @@ class Wallet:
                     print("finish writing")
             except Exception as e:
                 print(e)
+
+    def load(self, unique_id):
+
+        fileName = unique_id + ".json"
+        with open(FOLDER_NAME+"/"+fileName, 'r') as jsonFile:
+            jsonObject = json.load(jsonFile)
+        w = Wallet()
+        w.unique_id = unique_id
+        w.balance = jsonObject['balance']
+        print(w.balance)
+        return w
