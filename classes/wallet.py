@@ -13,7 +13,11 @@ class Wallet:
         self.history = []
 
     def generate_unique_id(self):
-        return str(uuid.uuid4())
+        unique_id = str(uuid.uuid4())
+
+        while (os.path.exists(FOLDER_NAME + "/" + unique_id + ".json")):
+            unique_id = str(uuid.uuid4())
+        return unique_id
 
     def add_balance(self, cashin):
         return self.balance + cashin
