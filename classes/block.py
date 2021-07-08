@@ -14,11 +14,11 @@ class Block:
         self.transactions = []
         self.base_hash = 0
 
-    def check_hash(self, base_hash):
-        hash = hashlib.sha256(base_hash.encode()).hexdigest()
-        if hash == self.hash{
+    def check_hash(self, base_hash, goodhash):
+        hash = '0000' + hashlib.sha256(base_hash.encode()).hexdigest()
+        if hash == goodhash:
             return True
-        } else:
+        else:
             return False
 
     def add_transaction(self):
@@ -27,23 +27,21 @@ class Block:
     def get_weight(self):
         pass
 
-    def save(self, hash):
+    def save(self, hash, entry):
 
         if (os.path.exists(FOLDER_NAME)):
-            print('aaa')
-
             try:
                 fileName = str(hash) + ".json"
                 print(fileName)
                 fpJ = os.path.join(FOLDER_NAME, fileName)
                 with open(fpJ, "w") as jsf:
-                    json.dump({"hash": hash}, jsf)
+                    json.dump(entry, jsf)
             except Exception as e:
                 print(e)
 
     def load(self, hash):
 
-        fileName = hash + ".json"
+        fileName = str(hash) + ".json"
         with open(FOLDER_NAME+"/"+fileName, 'r') as jsonFile:
             jsonObject = json.load(jsonFile)
         b = Block()
@@ -51,3 +49,5 @@ class Block:
         b.parent_hash = jsonObject['parent_hash']
         b.transactions = jsonObject['transactions']
         b.base_hash = jsonObject['base_hash']
+
+        return b

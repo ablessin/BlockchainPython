@@ -1,4 +1,5 @@
 
+from classes.block import Block
 from classes.chain import Chain
 from classes.wallet import Wallet
 
@@ -17,8 +18,11 @@ from classes.wallet import Wallet
 
 c = Chain()
 
-
 # print(c.generate_string())
 
-c.add_block()
-print(c.blocks)
+for i in range(4):
+    b = c.generate_hash()
+    if (b.check_hash(b.base_hash, b.hash)):
+        c.add_block(b)
+        b2 = b.load(b.hash)
+        print('la', b2.parent_hash)
