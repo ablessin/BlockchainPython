@@ -3,26 +3,37 @@ from classes.block import Block
 from classes.chain import Chain
 from classes.wallet import Wallet
 
+AMOUNT = 30
 
-# # CREATE WALLET
-# w = Wallet()
-# id = w.generate_unique_id()
+# CREATE BLOCKCHAIN
+chain = Chain()
 
-# entry = {"unique_id": id, "balance": w.balance}
+# CREATE WALLET EMETTEUR
+emetteur = Wallet()
+id = emetteur.generate_unique_id()
+emetteur.save()
 
-# w.save(id, entry)
+# CREATE WALLET RECEPTEUR
+recepteur = Wallet()
+id = recepteur.generate_unique_id()
+recepteur.save()
 
-# print(w.unique_id)
+# VERIFICATION EXISTENCE WALLET EMETTEUR ET RECEPTEUR
+if not(emetteur.exist() or recepteur.exist()):
+    raise Exception("Une wallet n'existe pas")
 
-# w2 = w.load('996e2906-8626-48e5-a465-586215739619')
+# CREATE BLOCKS
 
-c = Chain()
-
-# print(c.generate_string())
-
-for i in range(4):
-    b = c.generate_hash()
-    if (b.check_hash(b.base_hash, b.hash)):
-        c.add_block(b)
-        b2 = b.load(b.hash)
-        print('la', b2.parent_hash)
+block = chain.generate_hash()
+if (block.check_hash(block.base_hash, block.hash)):
+    # ADD BLOCK IN CHAIN
+    chain.add_block(block)
+    # ADD TRANSACTION IN BLOCK
+    cmpt = 0
+    for i in range(100):
+        chain.add_transaction(block.hash, AMOUNT, emetteur, recepteur)
+        cmpt += 1
+        print(cmpt)
+        chain.add_transaction(block.hash, AMOUNT, emetteur, recepteur)
+        cmpt += 1
+        print(cmpt)

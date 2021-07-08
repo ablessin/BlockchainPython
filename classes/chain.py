@@ -3,6 +3,7 @@ import string
 import random
 import hashlib
 import os
+import json
 
 FOLDER_NAME = "./content/blocs"
 
@@ -11,9 +12,7 @@ class Chain:
 
     def __init__(self):
         firstBlock = Block()
-        entry = {"hash": firstBlock.hash, "parent_hash": firstBlock.parent_hash,
-                 "transactions": firstBlock.transactions, "base_hash": firstBlock.base_hash}
-        firstBlock.save(firstBlock.hash, entry)
+        firstBlock.save(firstBlock.hash)
         self.blocks = [firstBlock]
 
     def generate_string(self):
@@ -49,16 +48,33 @@ class Chain:
     def add_block(self, newB: Block):
 
         newB.parent_hash = self.blocks[len(self.blocks)-1].hash
-        entry = {"hash": newB.hash, "parent_hash": newB.parent_hash,
-                 "transactions": newB.transactions, "base_hash": newB.base_hash}
-        newB.save(newB.hash, entry)
+        newB.save(newB.hash)
         self.blocks.append(newB)
         print(self.blocks)
 
-    def get_block(self):
-        pass
+    def get_block(self, hash):
+        fileName = hash + ".json"
+        with open(FOLDER_NAME+"/"+fileName, 'r') as jsonFile:
+            jsonObject = json.load(jsonFile)
+        b = Block()
+        b.taille = jsonObject['taille']
+        b.parent_hash = jsonObject['parent_hash']
+        b.transactions = jsonObject['transactions']
+        b.base_hash = jsonObject['base_hash']
+        b.hash = hash
 
-        # add_transaction()
+        return b
+
+    def add_transaction(self, hash, amount, emetteur, recepteur):
+
+        block = self.get_block(hash)
+
+        if (block.get_weight() > 256):
+            newBlock = self.generate_hash()
+            self.add_block(newBlock)
+            self.add_transaction(newBlock.hash, amount, emetteur, recepteur)
+        else:
+            block.add_transaction(amount, emetteur, recepteur)
 
         # find_transaction()
 

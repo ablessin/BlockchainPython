@@ -9,7 +9,7 @@ class Wallet:
 
     def __init__(self):
         self.unique_id = 0
-        self.balance = 0
+        self.balance = 100
         self.history = []
 
     def generate_unique_id(self):
@@ -30,13 +30,16 @@ class Wallet:
     def send(self):
         pass
 
-    def save(self, id, entry):
+    def save(self):
+
+        entry = {'unique_id': self.unique_id,
+                 'balance': self.balance, 'history': self.history}
 
         if (os.path.exists(FOLDER_NAME)):
 
             try:
 
-                fileName = id + ".json"
+                fileName = self.unique_id + ".json"
                 fpJ = os.path.join(FOLDER_NAME, fileName)
                 with open(fpJ, "w") as jsf:
                     json.dump(entry, jsf)
@@ -53,3 +56,6 @@ class Wallet:
         w.balance = jsonObject['balance']
 
         return w
+
+    def exist(self):
+        return os.path.exists(FOLDER_NAME + "/" + self.unique_id + ".json")

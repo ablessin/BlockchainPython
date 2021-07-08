@@ -1,6 +1,8 @@
+from classes.wallet import Wallet
 import json
 import os
 import hashlib
+import random
 
 FOLDER_NAME = "./content/blocs"
 
@@ -21,23 +23,50 @@ class Block:
         else:
             return False
 
-    def add_transaction(self):
-        pass
+    def add_transaction(self, amount, emetteur: Wallet, recepteur: Wallet):
+
+        # VERIFICATION DU SOLDE DU WALLET EMETTEUR
+        if (emetteur.balance < amount):
+            raise Exception(
+                "Le montant de votre wallet est insuffisant pour faire la transaction")
+
+        self.transactions.append(
+            {'id_transaction': random.randint(1, 1000000), 'emetteur': emetteur.unique_id, 'amount': amount, 'recepteur': recepteur.unique_id})
+
+        self.save(self.hash)
+
+        emetteur.balance = emetteur.sub_balance(amount)
+        emetteur.save()
+        recepteur.balance = recepteur.add_balance(amount)
+        recepteur.save()
 
     def get_weight(self):
-        pass
+        self.taille = os.path.getsize(
+            FOLDER_NAME + '/' + self.hash + '.json') / 1024
+        print("Actual size: " + str(self.taille) + " KO")
+        return self.taille
 
-    def save(self, hash, entry):
+    def save(self, hash):
+
+        entry = {'taille': self.taille,
+                 'hash': hash,
+                 'parent_hash': self.parent_hash,
+                 'transactions': self.transactions,
+                 'base_hash': self.base_hash}
 
         if (os.path.exists(FOLDER_NAME)):
             try:
                 fileName = str(hash) + ".json"
-                print(fileName)
-                fpJ = os.path.join(FOLDER_NAME, fileName)
-                with open(fpJ, "w") as jsf:
-                    json.dump(entry, jsf)
+                path = FOLDER_NAME + '/' + fileName+'.json'
+                if (os.path.exists(path)):
+                    with open(path, "w") as jsf:
+                        json.dump(entry, jsf)
+                else:
+                    fpJ = os.path.join(FOLDER_NAME, fileName)
+                    with open(fpJ, "w") as jsf:
+                        json.dump(entry, jsf)
             except Exception as e:
-                print(e)
+                print('titi', e)
 
     def load(self, hash):
 
@@ -46,6 +75,7 @@ class Block:
             jsonObject = json.load(jsonFile)
         b = Block()
         b.hash = hash
+        b.taille = jsonObject['taille']
         b.parent_hash = jsonObject['parent_hash']
         b.transactions = jsonObject['transactions']
         b.base_hash = jsonObject['base_hash']
