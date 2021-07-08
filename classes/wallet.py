@@ -13,17 +13,22 @@ class Wallet:
         self.history = []
 
     def generate_unique_id(self):
-        unique_id = str(uuid.uuid4())
+        self.unique_id = str(uuid.uuid4())
 
-        while (os.path.exists(FOLDER_NAME + "/" + unique_id + ".json")):
-            unique_id = str(uuid.uuid4())
-        return unique_id
+        while (os.path.exists(FOLDER_NAME + "/" + self.unique_id + ".json")):
+            self.unique_id = str(uuid.uuid4())
+        return self.unique_id
 
     def add_balance(self, cashin):
-        return self.balance + cashin
+        self.balance = self.balance + cashin
+        return self.balance
 
     def sub_balance(self, cashout):
-        return self.balance - cashout
+        self.balance = self.balance - cashout
+        return self.balance
+
+    def send(self):
+        pass
 
     def save(self, id, entry):
 
@@ -35,7 +40,6 @@ class Wallet:
                 fpJ = os.path.join(FOLDER_NAME, fileName)
                 with open(fpJ, "w") as jsf:
                     json.dump(entry, jsf)
-                    print("finish writing")
             except Exception as e:
                 print(e)
 
@@ -47,5 +51,5 @@ class Wallet:
         w = Wallet()
         w.unique_id = unique_id
         w.balance = jsonObject['balance']
-        print(w.balance)
+
         return w

@@ -1,13 +1,42 @@
-# class Block:
+import hashlib
+import uuid
+import json
+import os
 
-#     def __init__(self):
+FOLDER_NAME = "./content/blocs"
 
-# check_hash()
 
-# add_transaction()
+class Block:
 
-# get_weight()
+    def __init__(self):
+        self.taille = 0
+        self.hash = '00'
+        self.parent_hash = '00'
+        self.transactions = []
+        self.base_hash = 0
 
-# save()
+    def check_hash(self, base_hash):
+        pass
 
-# load()
+    def add_transaction(self):
+        pass
+
+    def get_weight(self):
+        pass
+
+    def save(self, hash):
+
+        if (os.path.exists(FOLDER_NAME)):
+            print('aaa')
+
+            try:
+                fileName = str(hash) + ".json"
+                print(fileName)
+                fpJ = os.path.join(FOLDER_NAME, fileName)
+                with open(fpJ, "w") as jsf:
+                    json.dump({"hash": hash}, jsf)
+            except Exception as e:
+                print(e)
+
+    def load(self):
+        pass
