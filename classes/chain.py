@@ -38,7 +38,6 @@ class Chain:
 
     def verify_hash(self, hash):
         if not(os.path.exists(FOLDER_NAME + "/" + hash + ".json")):
-            print(hash.startswith('0000'))
             return hash.startswith('0000')
         else:
             return False
@@ -49,7 +48,6 @@ class Chain:
         print(hash)
         b = Block()
         b.hash = hash
-        b.parent_hash = self.blocks[len(self.blocks) - 1].hash
         b.save(hash)
 
         self.blocks.append(b)

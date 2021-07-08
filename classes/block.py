@@ -1,7 +1,6 @@
-import hashlib
-import uuid
 import json
 import os
+import hashlib
 
 FOLDER_NAME = "./content/blocs"
 
@@ -16,7 +15,11 @@ class Block:
         self.base_hash = 0
 
     def check_hash(self, base_hash):
-        pass
+        hash = hashlib.sha256(base_hash.encode()).hexdigest()
+        if hash == self.hash{
+            return True
+        } else:
+            return False
 
     def add_transaction(self):
         pass
@@ -38,5 +41,13 @@ class Block:
             except Exception as e:
                 print(e)
 
-    def load(self):
-        pass
+    def load(self, hash):
+
+        fileName = hash + ".json"
+        with open(FOLDER_NAME+"/"+fileName, 'r') as jsonFile:
+            jsonObject = json.load(jsonFile)
+        b = Block()
+        b.hash = hash
+        b.parent_hash = jsonObject['parent_hash']
+        b.transactions = jsonObject['transactions']
+        b.base_hash = jsonObject['base_hash']
