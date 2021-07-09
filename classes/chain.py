@@ -80,15 +80,7 @@ class Chain:
     def add_transaction(self, hash, amount, emetteur, recepteur):
 
         block = self.get_block(hash)
-
-        # SI LE BLOCK EST TROP LOURD (256KO) EN CREER UN NOUVEAU EN RAPELLANT
-        # LA FONCTION POUR NE PAS PERDRE LES INFORMATIONS
-        if (block.get_weight() > 256):
-            newBlock = self.generate_hash()
-            self.add_block(newBlock)
-            self.add_transaction(newBlock.hash, amount, emetteur, recepteur)
-        else:
-            block.add_transaction(amount, emetteur, recepteur)
+        block.add_transaction(amount, emetteur, recepteur)
 
         # find_transaction()
 
