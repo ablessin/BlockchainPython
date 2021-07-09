@@ -53,5 +53,4 @@ if (block.check_hash(block.base_hash, block.hash)):
                 chain.add_block(block)
                 chain.add_transaction(
                     block.hash, AMOUNT, emetteur, recepteur)
-                print('isfdni')
                 block.get_weight()
