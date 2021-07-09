@@ -30,7 +30,6 @@ class Chain:
         newB.base_hash = string
         hash = hashlib.sha256(string.encode()).hexdigest()
         newB.hash = hash
-        cpt = 0
 
         # APELLE LA FONCTION POUR VOIR SI LE HASH EST CORRECT SINON EN
         # REGENERE UN NOUVEAU
@@ -41,8 +40,6 @@ class Chain:
             newB.hash = hash
             self.verify_hash(hash)
 
-        # COMPTE LE NOMBRE DE HASH GENERER PARCE QUE CEST MARRANT
-        cpt = cpt+1
         return newB
 
     # VERIFIE SI LE HASH EXISTE PAS DEJA ET SI IL COMMENCE PAR "0000"
@@ -82,6 +79,7 @@ class Chain:
         block = self.get_block(hash)
         block.add_transaction(amount, emetteur, recepteur)
 
+        # PAS EU LE TEMPS :(
         # find_transaction()
 
         # get_last_transaction_number()

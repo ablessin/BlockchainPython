@@ -50,6 +50,7 @@ class Block:
         recepteur.save()
 
     # RECUPERE LE POIDS D UN BLOCK VIA LA FONCTION GETSIZE
+
     def get_weight(self):
         self.taille = os.path.getsize(
             FOLDER_NAME + '/' + self.hash + '.json') / 1024

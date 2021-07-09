@@ -1,7 +1,8 @@
 from classes.chain import Chain
 from classes.wallet import Wallet
 
-AMOUNT = 0.01
+# MONTANT DE LA TRANSACTION
+AMOUNT = 0.011
 
 # CREATE BLOCKCHAIN
 chain = Chain()

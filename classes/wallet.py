@@ -33,7 +33,7 @@ class Wallet:
         self.balance = self.balance - cashout
         return self.balance
 
-    # JE CROIS QUE J Y SUIS PAS REVENU
+    # JE CROIS QUE J Y SUIS PAS REVENU :(
     def send(self):
         pass
 
