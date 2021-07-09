@@ -32,7 +32,8 @@ class Chain:
         newB.hash = hash
         cpt = 0
 
-        # APELLE LA FONCTION POUR VOIR SI LE HASH EST CORRECT SINON EN REGENERE UN NOUVEAU
+        # APELLE LA FONCTION POUR VOIR SI LE HASH EST CORRECT SINON EN
+        # REGENERE UN NOUVEAU
         while not(self.verify_hash(hash)):
             string = self.generate_string()
             newB.base_hash = string
@@ -44,7 +45,8 @@ class Chain:
         cpt = cpt+1
         return newB
 
-    # VERIFIE SI LE HASH EXISTE PAS DEJA ET SI IL COMMENCE PAR "0000" AVEC LA FONCTION STARTSWITH
+    # VERIFIE SI LE HASH EXISTE PAS DEJA ET SI IL COMMENCE PAR "0000"
+    # AVEC LA FONCTION STARTSWITH
     def verify_hash(self, hash):
         if not(os.path.exists(FOLDER_NAME + "/" + hash + ".json")):
             return hash.startswith('0000')
@@ -73,12 +75,14 @@ class Chain:
 
         return b
 
-    # AJOUTE UNE TRANSACTION ENTRE DEUX WALLETS ET APELLE LA FONCTION HOMONYME DANS BLOCK.PY
+    # AJOUTE UNE TRANSACTION ENTRE DEUX WALLETS ET APELLE
+    # LA FONCTION HOMONYME DANS BLOCK.PY
     def add_transaction(self, hash, amount, emetteur, recepteur):
 
         block = self.get_block(hash)
 
-        # SI LE BLOCK EST TROP LOURD (256KO) EN CREER UN NOUVEAU EN RAPELLANT LA FONCTION POUR NE PAS PERDRE LES INFORMATIONS
+        # SI LE BLOCK EST TROP LOURD (256KO) EN CREER UN NOUVEAU EN RAPELLANT
+        # LA FONCTION POUR NE PAS PERDRE LES INFORMATIONS
         if (block.get_weight() > 256):
             newBlock = self.generate_hash()
             self.add_block(newBlock)

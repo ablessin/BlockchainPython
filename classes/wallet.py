@@ -17,7 +17,8 @@ class Wallet:
     def generate_unique_id(self):
         self.unique_id = str(uuid.uuid4())
 
-        # VERIFIE SI LA CHAINE DE CARACTERE N EXISTE PAS DEJA SINON EN RECREER UN
+        # VERIFIE SI LA CHAINE DE CARACTERE N EXISTE
+        # PAS DEJA SINON EN RECREER UN
         while (os.path.exists(FOLDER_NAME + "/" + self.unique_id + ".json")):
             self.unique_id = str(uuid.uuid4())
         return self.unique_id
@@ -52,8 +53,8 @@ class Wallet:
                     json.dump(entry, jsf)
             except Exception as e:
                 print(e)
-    # RECUPERE LES ELEMENTS D UNE WALLETS PRECISE EN FONCTION SE SON UNIQUE_ID
 
+    # RECUPERE LES ELEMENTS D UNE WALLETS PRECISE EN FONCTION SE SON UNIQUE_ID
     def load(self, unique_id):
 
         fileName = unique_id + ".json"

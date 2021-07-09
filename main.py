@@ -1,4 +1,3 @@
-
 from classes.chain import Chain
 from classes.wallet import Wallet
 

@@ -16,7 +16,8 @@ class Block:
         self.transactions = []
         self.base_hash = 0
 
-    # VERIFIE SI LE HASH CORRESPOND AU BASE_HASH UNE FOIS BASE_HASH HASHE, NE S'EST PAS QUAND L'UTILISER DANS MAIN.PY MAIS FONCTIONNE
+    # VERIFIE SI LE HASH CORRESPOND AU BASE_HASH UNE FOIS BASE_HASH HASHE
+    # NE SAIT PAS QUAND L'UTILISER DANS MAIN.PY MAIS FONCTIONNE
     def check_hash(self, base_hash, goodhash):
         hash = hashlib.sha256(base_hash.encode()).hexdigest()
         if hash == goodhash:
@@ -24,20 +25,25 @@ class Block:
         else:
             return False
 
-    # RECUPERE LES DEUX WALLETS ET EFFECTUE LES TESTS POUR SAVOIR SI LA TRANSACTIONS EST POSSIBLES
+    # RECUPERE LES DEUX WALLETS ET EFFECTUE LES TESTS POUR
+    # SAVOIR SI LA TRANSACTIONS EST POSSIBLES
     def add_transaction(self, amount, emetteur: Wallet, recepteur: Wallet):
 
         # VERIFICATION DU SOLDE DU WALLET EMETTEUR SINON ON SORT DE LA FONCTION
         if (emetteur.balance < amount):
-            raise Exception(
-                "Le montant de votre wallet est insuffisant pour faire la transaction")
+            raise Exception("Le montant de votre wallet est insuffisant")
 
-        # RECUPERE TOUTES LES INFORMATIONS POUR LES AJOUTER AUX TRANSACTIONS DU BLOCK
-        self.transactions.append(
-            {'id_transaction': random.randint(1, 1000000), 'emetteur': emetteur.unique_id, 'amount': amount, 'recepteur': recepteur.unique_id})
+        # RECUPERE TOUTES LES INFORMATIONS POUR LES
+        # AJOUTER AUX TRANSACTIONS DU BLOCK
+        self.transactions.append({
+            'id_transaction': random.randint(1, 1000000),
+            'emetteur': emetteur.unique_id,
+            'amount': amount,
+            'recepteur': recepteur.unique_id})
         self.save(self.hash)
 
-        # EFFECTUE LES OPERATIONS DES WALLETS ET SAUVEGARDE LES DIFFERENTES WALLETS
+        # EFFECTUE LES OPERATIONS DES WALLETS ET
+        # SAUVEGARDE LES DIFFERENTES WALLETS
         emetteur.balance = emetteur.sub_balance(amount)
         emetteur.save()
         recepteur.balance = recepteur.add_balance(amount)
