@@ -39,12 +39,16 @@ if (block.check_hash(block.base_hash, block.hash)):
     cmpt = 0
     for i in range(1000):
         for j in range(10):
+            # SI TAILLE DU BLOC INFERIEUR A 256KO
             if block.taille < 256:
                 chain.add_transaction(block.hash, AMOUNT, emetteur, recepteur)
                 cmpt += 1
                 print(cmpt)
                 block.get_weight()
+
+            # SI TAILLE DU BLOC SUPERIEUR A 256KO ON RECREER UN BLOCK
             else:
+
                 block = chain.generate_hash()
                 chain.add_block(block)
                 chain.add_transaction(
