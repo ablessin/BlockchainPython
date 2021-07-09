@@ -17,7 +17,6 @@ class Block:
         self.base_hash = 0
 
     # VERIFIE SI LE HASH CORRESPOND AU BASE_HASH UNE FOIS BASE_HASH HASHE
-    # NE SAIT PAS QUAND L'UTILISER DANS MAIN.PY MAIS FONCTIONNE
     def check_hash(self, base_hash, goodhash):
         hash = hashlib.sha256(base_hash.encode()).hexdigest()
         if hash == goodhash:
