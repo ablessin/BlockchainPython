@@ -10,6 +10,7 @@ chain = Chain()
 
 # CREATE WALLET EMETTEUR
 
+
 emetteur = Wallet()
 id = emetteur.generate_unique_id()
 emetteur.save()
